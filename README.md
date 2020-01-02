@@ -1,10 +1,12 @@
-# combine
+# Flutter Todo App
 
 A new Flutter project.
 
-## Getting Started
+## What's it about
 
-This project is a starting point for a Flutter application.
+Make a todo app which provides simple task activies
+
+Resources from google:
 
 A few resources to get you started if this is your first Flutter project:
 
