@@ -25,13 +25,20 @@ class AppState extends State<App>{
       body: ReorderableListView(
         children: <Widget>[
           for(final value in items)
-            Text(
-              value,
+            CheckboxListTile(
+              value: false,
+              onChanged: null,
               key: Key(value),
-              style: TextStyle(
-                fontSize: 22.0
-              ),
-              )
+              title:  
+                      Text(
+                        value,
+                        key: Key(value),
+                        style: TextStyle(
+                        fontSize: 22.0
+                        ),
+                      )
+            ),
+            
         ],
         onReorder: (OldIndex, NewIndex){
           setState(() {
