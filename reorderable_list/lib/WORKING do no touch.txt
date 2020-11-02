@@ -8,11 +8,11 @@ void main(){
   ));
 }
 
-List<String> items = ["Item 1 - I will stick to the new position!",
-                  "Item 2 - I will stick to the new position!",
-                  "Item 3 - I will stick to the new position!"];
-
-bool toggle = false;
+class todo{
+  String todoText;
+  bool todoToggle;
+  todo(this.todoText, this.todoToggle);
+}
 
 class _strikeThrough extends StatelessWidget{
 
@@ -46,6 +46,7 @@ class _strikeThrough extends StatelessWidget{
   Widget build(BuildContext context) {
     return _strikewidget();
   }
+
 }
 
 class App extends StatefulWidget{
@@ -57,28 +58,39 @@ class App extends StatefulWidget{
 
 class AppState extends State<App>{ 
 
-Widget build(BuildContext context){
+    static List<String> items = ["Item 1 - I will stick to the new position!",
+                      "Item 2 - I will stick to the new position!",
+                      "Item 3 - I will stick to the new position!"];
+
+    final List<todo> todos =  items.map<todo>((String item){
+    return todo(item, false);
+  }).toList();
+
+
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Text("First Empty Half Baked App"),
       ),
       body: ReorderableListView(
         children: <Widget>[
-          for(var item in items)
+          for(var todo in todos)
             CheckboxListTile(
-              value: toggle,
+              value: todo.todoToggle,
               onChanged: (bool){
                 setState(() {
                   if(!bool){
-                    toggle = false;
+                    todo.todoToggle = false;
                   }
                   else{
-                    toggle = true;
+                    todo.todoToggle = true;
                   }
                 });
+
               },
-              key: Key(item),
-              title: _strikeThrough(todoText: item, todoToggle: toggle),
+              key: Key(todo.todoText),
+              title: _strikeThrough(todoText: todo.todoText, todoToggle: todo.todoToggle),
+              //title: Text(todo.todoText),
               )          
         ],
         onReorder: (OldIndex, NewIndex){
@@ -86,8 +98,8 @@ Widget build(BuildContext context){
             if(OldIndex < NewIndex){
               NewIndex -= 1;
             }
-            var getReplacedWidget = items.removeAt(OldIndex);
-            items.insert(NewIndex, getReplacedWidget);
+            var getReplacedWidget = todos.removeAt(OldIndex);
+            todos.insert(NewIndex, getReplacedWidget);
           });
         },
       ),
